@@ -1,6 +1,5 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:proyecto_peliculas/widgets/widgets.dart';
 
 class DetailsScreen extends StatelessWidget {
   @override
@@ -15,9 +14,15 @@ class DetailsScreen extends StatelessWidget {
         _CustomAppBar(),
         //Añadiendo cosas para que se vean debajo
         //Deben ser del tipo sliver list
-        SliverList(
-            delegate: SliverChildListDelegate(
-                [Text("Hola Pelicula"), _PosterAndTitle()]))
+        SliverList(delegate: SliverChildListDelegate([
+          _PosterAndTitle(),
+          _Overview(),
+          _Overview(),
+          _Overview(),
+          _Overview(),
+          CastinCards(),
+
+        ]))
       ],
     ));
   }
@@ -35,6 +40,7 @@ class _CustomAppBar extends StatelessWidget {
           centerTitle: true,
           titlePadding: EdgeInsets.all(0),
           title: Container(
+            padding: EdgeInsets.only(bottom: 10),
               width: double.infinity,
               alignment: Alignment.bottomCenter,
               color: Colors
@@ -87,15 +93,16 @@ class _PosterAndTitle extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
-
               Row(
                 children: [
-                  Icon(Icons.star, size: 15,color: Colors.amber),
+                  Icon(Icons.star, size: 15, color: Colors.amber),
                   SizedBox(width: 10),
-                  Text("movie.voteAverage", style: Theme.of(context).textTheme.bodySmall,)
+                  Text(
+                    "movie.voteAverage",
+                    style: Theme.of(context).textTheme.bodySmall,
+                  )
                 ],
               )
-
             ],
           )
         ],
@@ -103,3 +110,16 @@ class _PosterAndTitle extends StatelessWidget {
     );
   }
 }
+
+class _Overview extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding:EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      child: Text('Graecis qualisque conubia mauris dictum falli cubilia simul accusata urbanitas. Posuere libero qualisque sententiae theophrastus. Cetero natoque salutatus purus tibique himenaeos libris ad vituperatoribus.',
+      textAlign: TextAlign.justify,
+      style:Theme.of(context).textTheme.bodyMedium),
+    );
+  }
+}
+
