@@ -11,6 +11,7 @@ class MoviesProvider extends ChangeNotifier {
   String _language = 'es-ES';
 
   List<movie> onDisplayMovies = []; //LO inicializo como un arreglo vacío
+  List<movie> popularMovies =[];
 
 //Ahora llamo al constructor.
 //Es como programar un objeto
@@ -19,6 +20,7 @@ class MoviesProvider extends ChangeNotifier {
 
     //Al llamar el constructor, ejecuto el ObtenerNowPlayingMovies
     this.ObtenerNowPlayinMovies();
+    this.getPopularMovies();
   }
 
 //Se crea el método para llamar a la parte HTTP
@@ -33,10 +35,27 @@ class MoviesProvider extends ChangeNotifier {
     var response = await http.get(url);
     var nowPlayingResponse = NowPlayingResponse.fromJson(response.body);
 
-  print("Edd, esto lo estoy trayendo de la Apli:  " + nowPlayingResponse.results[0].title);
+  print("Edd, esto lo estoy trayendo de la Appi:  " + nowPlayingResponse.results[0].title);
   this.onDisplayMovies = nowPlayingResponse.results;
 
   notifyListeners();
-
   }
+
+  getPopularMovies () async  {
+
+    print("Obteniendo Peliculas Populares");
+
+    var url = Uri.https(this._baseUrl, '3/movie/popular',{ //Aqui cambio la ruta del json a popular. Ver el link
+      'api_key': _apiKey,
+      'language': _language,
+      'page': '1'});
+    var response = await http.get(url);
+    var popularResponse = PopularResponse.fromJson(response.body);
+
+    this.popularMovies = [...popularMovies, ...popularResponse.results];
+    print(popularMovies[0]);
+
+    notifyListeners();
+
+}
 }

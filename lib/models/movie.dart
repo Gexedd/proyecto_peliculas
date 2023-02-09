@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 
 class movie {
@@ -34,6 +32,13 @@ class movie {
   bool video;
   double voteAverage;
   int voteCount;
+
+  get fullPosterImg{
+    if (this.posterPath != null) {
+      return 'https://image.tmdb.org/t/p/w500${this.posterPath}';
+    }
+    return 'http://mireflex.sytes.net/cinemaplus2/build/img/Logocinemaplus.png';
+  }
 
   factory movie.fromJson(String str) => movie.fromMap(json.decode(str));
 
