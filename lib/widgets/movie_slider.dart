@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_peliculas/models/models.dart';
+
 
 class MovieSlider extends StatelessWidget {
+final List<Movie> movies;
+final String? title;
+
+
+  const MovieSlider({
+    super.key,
+    required this.movies,
+    this.title});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -10,19 +21,22 @@ class MovieSlider extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
+          if (this.title!= null)
+          //TODO si no hay titulo no se debe mostrar este widget
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              "Populares",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              this.title!,style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
           Expanded(
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 20,
-                itemBuilder: (_, int index) => _MoviePoster()),
-          )
+                itemCount: movies.length,
+                itemBuilder: (_, int index) => _MoviePoster(movie: movies [index])
+            ),
+          ),
         ],
       ),
     );
@@ -30,6 +44,14 @@ class MovieSlider extends StatelessWidget {
 }
 
 class _MoviePoster extends StatelessWidget {
+
+  //TODO: debe recbir final movie;
+  final Movie movie;
+
+  _MoviePoster({super.key, required this.movie});
+
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,7 +68,7 @@ class _MoviePoster extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
               child: FadeInImage(
                 placeholder: AssetImage('assets/no-image.jpg'),
-                image: NetworkImage("http://mireflex.sytes.net/cinemaplus2/posters/943c34f65a87fb246b5069ce4c11df46.jpg"),
+                image: NetworkImage(movie.fullPosterImg),
                 width: 130,
                 height:180 ,
                 fit: BoxFit.cover,
@@ -55,7 +77,7 @@ class _MoviePoster extends StatelessWidget {
           ),
 
           SizedBox( height: 5), //Truco para separar un poco el titulo
-          Text("Titulo Película Esta es una descripcion larga", overflow: TextOverflow.ellipsis,
+          Text(movie.title, overflow: TextOverflow.ellipsis,
           maxLines: 2,
           textAlign: TextAlign.center),
           Text("Puntaje IMDB",

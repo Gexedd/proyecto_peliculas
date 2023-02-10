@@ -10,8 +10,8 @@ class MoviesProvider extends ChangeNotifier {
   String _apiKey = '77039b776a56fd3b8ee03aeca22c0a23';
   String _language = 'es-ES';
 
-  List<movie> onDisplayMovies = []; //LO inicializo como un arreglo vacío
-  List<movie> popularMovies =[];
+  List<Movie> onDisplayMovies = []; //LO inicializo como un arreglo vacío
+  List<Movie> popularMovies =[];
 
 //Ahora llamo al constructor.
 //Es como programar un objeto

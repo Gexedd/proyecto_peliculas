@@ -12,7 +12,7 @@ class PopularResponse {
   });
 
   int page;
-  List<movie> results;
+  List<Movie> results;
   int totalPages;
   int totalResults;
 
@@ -22,7 +22,7 @@ class PopularResponse {
 
   factory PopularResponse.fromMap(Map<String, dynamic> json) => PopularResponse(
     page: json["page"],
-    results: List<movie>.from(json["results"].map((x) => movie.fromMap(x))),
+    results: List<Movie>.from(json["results"].map((x) => Movie.fromMap(x))),
     totalPages: json["total_pages"],
     totalResults: json["total_results"],
   );

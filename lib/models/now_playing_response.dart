@@ -15,7 +15,7 @@ class NowPlayingResponse {
 
   Dates dates;
   int page;
-  List<movie> results;
+  List<Movie> results;
   int totalPages;
   int totalResults;
 
@@ -26,7 +26,7 @@ class NowPlayingResponse {
   factory NowPlayingResponse.fromMap(Map<String, dynamic> json) => NowPlayingResponse(
     dates: Dates.fromMap(json["dates"]),
     page: json["page"],
-    results: List<movie>.from(json["results"].map((x) => movie.fromMap(x))),
+    results: List<Movie>.from(json["results"].map((x) => Movie.fromMap(x))),
     totalPages: json["total_pages"],
     totalResults: json["total_results"],
   );

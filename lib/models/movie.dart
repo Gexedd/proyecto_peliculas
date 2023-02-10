@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-class movie {
-  movie({
+class Movie {
+  Movie({
     required this.adult,
      this.backdropPath,
     required this.genreIds,
@@ -40,11 +40,11 @@ class movie {
     return 'http://mireflex.sytes.net/cinemaplus2/build/img/Logocinemaplus.png';
   }
 
-  factory movie.fromJson(String str) => movie.fromMap(json.decode(str));
+  factory Movie.fromJson(String str) => Movie.fromMap(json.decode(str));
 
   ///String toJson() => json.encode(toMap());
 
-  factory movie.fromMap(Map<String, dynamic> json) => movie(
+  factory Movie.fromMap(Map<String, dynamic> json) => Movie(
     adult: json["adult"],
     backdropPath: json["backdrop_path"],
     genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
