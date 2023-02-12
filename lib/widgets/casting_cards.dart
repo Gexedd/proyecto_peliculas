@@ -1,47 +1,82 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:proyecto_peliculas/models/models.dart';
+import 'package:proyecto_peliculas/providers/movies_provider.dart';
 
 class CastinCards extends StatelessWidget {
+  final int movieId;
+
+  const CastinCards(this.movieId);
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 30),
-      width: double.infinity,
-      height: 200,
-      //color: Colors.red,
-      child: ListView.builder(
-        itemCount: 10,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (BuildContext context, int index) {
-          return _CastCard();
-        },
-      ),
+    final moviesProvider = Provider.of<MoviesProvider>(context, listen: false);
+
+    return FutureBuilder(
+      future: moviesProvider.getMovieCast(movieId),
+      builder: (_, AsyncSnapshot<List<Cast>> snapshot) {
+
+if (!snapshot.hasData) {
+  return Container(
+    constraints: BoxConstraints(maxWidth: 150),
+height: 180,
+    child: CupertinoActivityIndicator(),
+
+  );
+}
+
+
+    final cast = snapshot.data!;
+
+        return Container(
+          margin: EdgeInsets.only(bottom: 30),
+          width: double.infinity,
+          height: 210, //Este es el container detras de las cartas
+          //color: Colors.red,
+          child: ListView.builder(
+            itemCount: cast.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (BuildContext context, int index) {
+              return _CastCard(cast [index]);
+            },
+          ),
+        );
+      },
     );
   }
 }
 
 class _CastCard extends StatelessWidget {
+
+  final Cast actor;
+  const _CastCard(this.actor);
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10),
       width: 110,
-      height: 200,
-      //color: Colors.green,
+      height: 300,
+     // color: Colors.green,
       child: Column(
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(15),
             child: FadeInImage(
-                placeholder: AssetImage('assets/no-image.jpg'),
-                image: NetworkImage("http://mireflex.sytes.net/cinemaplus2/posters/943c34f65a87fb246b5069ce4c11df46.jpg"),
-            fit: BoxFit.cover,
+              placeholder: AssetImage('assets/no-image.jpg'),
+              image: NetworkImage(
+                  actor.fullProfilePath),
+              fit: BoxFit.cover,
             ),
           ),
           SizedBox(height: 5),
-          Text("nombre del actor You will find only what you bring in.",
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          textAlign: TextAlign.center,)
+          Text(
+            actor.name,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+          )
         ],
       ),
     );

@@ -33,11 +33,20 @@ class Movie {
   double voteAverage;
   int voteCount;
 
+  String? heroId;
+
   get fullPosterImg{
     if (this.posterPath != null) {
       return 'https://image.tmdb.org/t/p/w500${this.posterPath}';
     }
     return 'http://mireflex.sytes.net/cinemaplus2/build/img/Logocinemaplus.png';
+  }
+
+  get fullBackdropPath{
+    if (this.backdropPath != null) {
+      return 'https://image.tmdb.org/t/p/w500${this.backdropPath}';
+    }
+    return 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg';
   }
 
   factory Movie.fromJson(String str) => Movie.fromMap(json.decode(str));

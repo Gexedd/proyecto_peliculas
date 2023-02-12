@@ -23,23 +23,26 @@ class CardSwiper extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      height: size.height * 0.4,
+      height: size.height * 0.5,
       //color: Colors.red,
       child: Swiper(
         itemBuilder: (BuildContext context, int index) {
           final movie = movies[index];
-          print(movie
-              .fullPosterImg); //Llamo al getter que fue creado en el movie.dart
+          print(movie.fullPosterImg); //Llamo al getter que fue creado en el movie.dart
+
+          movie.heroId ='swiper-${movie.id}';
 
           return GestureDetector(
-            onTap: () => Navigator.pushNamed(context, 'details',
-                arguments: "movie-instance"),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: FadeInImage(
-                placeholder: AssetImage('assets/no-image.jpg'),
-                image: NetworkImage(movie.fullPosterImg),
-                fit: BoxFit.cover,
+            onTap: () => Navigator.pushNamed(context, 'details',arguments: movie),
+            child: Hero(
+              tag: movie.heroId!,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: FadeInImage(
+                  placeholder: AssetImage('assets/no-image.jpg'),
+                  image: NetworkImage(movie.fullPosterImg),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           );
@@ -48,8 +51,8 @@ class CardSwiper extends StatelessWidget {
         //pagination: SwiperPagination(),
         //control: SwiperControl(),
         layout: SwiperLayout.STACK,
-        itemWidth: size.width * 0.4,
-        itemHeight: size.height * 0.35,
+        itemWidth: size.width * 0.5,
+        itemHeight: size.height * 0.45,
       ),
     );
   }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_peliculas/providers/movies_provider.dart';
+import 'package:proyecto_peliculas/search/search_delegate.dart';
 import 'package:proyecto_peliculas/widgets/widgets.dart';
+
 
 class HomeScreen extends StatelessWidget {
 
@@ -19,7 +21,7 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton (
             icon: Icon(Icons.search_outlined),
-            onPressed: (){},
+            onPressed: ()=>showSearch(context: context, delegate: MovieSearchDelegate()),
           )
         ],
       ),
@@ -37,6 +39,7 @@ class HomeScreen extends StatelessWidget {
                 MovieSlider(
                   movies: moviesProvider.popularMovies, //populares
                   title: 'Populares', //opcional
+                  onNextPage: () => moviesProvider.getPopularMovies(),
                 ),
               ],
             ),
